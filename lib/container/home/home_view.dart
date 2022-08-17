@@ -1,3 +1,6 @@
+import 'dart:html';
+
+import 'package:example_flutter/utils/constant.dart';
 import 'package:flutter/material.dart';
 import '../../generated/l10n.dart';
 
@@ -15,16 +18,21 @@ class _HomeViewPage extends State<HomeView> {
     double height = MediaQuery.of(context).size.height;
     S lang = S.of(context);
     return Scaffold(
-        body: Center(
-      child: Column(
-        children: [
-          SizedBox(height: height * 0.05),
-          Text(
-            lang.login,
-            style:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: height * 0.03),
-          )
-        ],
+        body: Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(image_auth), fit: BoxFit.cover)),
+      child: Center(
+        child: Column(
+          children: [
+            SizedBox(height: height * 0.05),
+            Text(
+              lang.login,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: width * 0.05),
+            )
+          ],
+        ),
       ),
     ));
   }
