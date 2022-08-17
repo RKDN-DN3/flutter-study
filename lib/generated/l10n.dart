@@ -79,6 +79,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Input here`
+  String get input_here {
+    return Intl.message(
+      'Input here',
+      name: 'input_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input you password`
+  String get please_input_you_password {
+    return Intl.message(
+      'Please input you password',
+      name: 'please_input_you_password',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

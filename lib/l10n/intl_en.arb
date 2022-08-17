@@ -1,5 +1,9 @@
 {
   "hello": "Hello {name}",
   "login": "Sign in",
-  "home": "Home"
+  "home": "Home",
+  "account": "Account",
+  "password": "Password",
+  "input_here": "Input here",
+  "please_input_you_password": "Please input you password"
 }
