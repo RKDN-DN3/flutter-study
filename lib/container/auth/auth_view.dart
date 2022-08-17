@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../generated/l10n.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({Key? key}) : super(key: key);
@@ -28,26 +29,54 @@ class _AuthViewPage extends State<AuthView> {
           body: Container(
             padding: EdgeInsets.symmetric(horizontal: width * 0.05),
             child: Column(
-              // ignore: prefer_const_literals_to_create_immutables
               children: [
                 SizedBox(height: height * 0.05),
                 TextFormField(
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: lang.account,
+                    hintText: lang.please_input_you_email,
+                    prefixIconConstraints: BoxConstraints(
+                      maxHeight: 25,
+                      maxWidth: width * 0.1,
+                    ),
+                    prefixIcon: Container(
+                      margin: EdgeInsets.only(left: width * 0.02),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: FaIcon(
+                          FontAwesomeIcons.at,
+                          size: width * 0.05,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: height * 0.05),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _userPasswordController,
-                  obscureText:
-                      !_passwordVisible, //This will obscure text dynamically
+                  obscureText: !_passwordVisible,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: lang.password,
                     hintText: lang.please_input_you_password,
-                    // Here is key idea
+                    prefixIconConstraints: BoxConstraints(
+                      maxHeight: 25,
+                      maxWidth: width * 0.1,
+                    ),
+                    prefixIcon: Container(
+                      margin: EdgeInsets.only(left: width * 0.02),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: FaIcon(
+                          FontAwesomeIcons.lock,
+                          size: width * 0.05,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         // Based on passwordVisible state choose the icon
@@ -57,7 +86,6 @@ class _AuthViewPage extends State<AuthView> {
                         color: Theme.of(context).primaryColorDark,
                       ),
                       onPressed: () {
-                        // Update the state i.e. toogle the state of passwordVisible variable
                         setState(() {
                           _passwordVisible = !_passwordVisible;
                         });
