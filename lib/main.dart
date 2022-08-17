@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       routes: rootRouter,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: '/',
+      initialRoute: '/auth',
     );
   }
 }

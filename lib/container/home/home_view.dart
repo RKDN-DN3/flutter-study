@@ -25,7 +25,7 @@ class _HomeViewPage extends State<HomeView> {
           children: [
             SizedBox(height: height * 0.05),
             Text(
-              lang.login,
+              lang.home,
               style: TextStyle(
                   fontWeight: FontWeight.bold, fontSize: width * 0.05),
             )
