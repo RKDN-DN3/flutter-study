@@ -20,6 +20,19 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
+  static String m0(name) => "Xin chào ${name}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
+        "hello": m0,
+        "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "input_here": MessageLookupByLibrary.simpleMessage("Nhập tại đây"),
+        "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+        "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
+        "please_input_you_email":
+            MessageLookupByLibrary.simpleMessage("Vui lòng nhập email của bạn"),
+        "please_input_you_password":
+            MessageLookupByLibrary.simpleMessage("Vui lòng nhập mật khẩu")
+      };
 }

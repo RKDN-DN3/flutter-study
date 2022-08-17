@@ -49,6 +49,86 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Hello {name}`
+  String hello(Object name) {
+    return Intl.message(
+      'Hello $name',
+      name: 'hello',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Sign in`
+  String get login {
+    return Intl.message(
+      'Sign in',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get home {
+    return Intl.message(
+      'Home',
+      name: 'home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Input here`
+  String get input_here {
+    return Intl.message(
+      'Input here',
+      name: 'input_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input you password`
+  String get please_input_you_password {
+    return Intl.message(
+      'Please input you password',
+      name: 'please_input_you_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input you email`
+  String get please_input_you_email {
+    return Intl.message(
+      'Please input you email',
+      name: 'please_input_you_email',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
