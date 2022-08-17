@@ -1,3 +1,5 @@
 {
-  "hello": "Xin chào {name}"
+  "hello": "Xin chào {name}",
+  "login": "Đăng nhập",
+  "home": "Home"
 }

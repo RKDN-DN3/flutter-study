@@ -1,3 +1,5 @@
 {
-  "hello": "Hello {name}"
+  "hello": "Hello {name}",
+  "login": "Sign in",
+  "home": "Home"
 }
