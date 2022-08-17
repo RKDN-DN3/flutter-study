@@ -10,4 +10,9 @@ class HomeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _count++;
     notifyListeners();
   }
+
+  void decrement() {
+    _count--;
+    notifyListeners();
+  }
 }
