@@ -1,3 +1,4 @@
+import 'package:example_flutter/model/data/user.dart';
 import 'package:flutter/material.dart';
 import '../../generated/l10n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,10 +10,11 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewPage extends State<AuthView> {
+  final TextEditingController _userPasswordController = TextEditingController();
   bool _passwordVisible = false;
   bool _isFocusEmail = false;
   bool _isFocusPassword = false;
-  final TextEditingController _userPasswordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +28,6 @@ class _AuthViewPage extends State<AuthView> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     S lang = S.of(context);
-
     return SafeArea(
         top: true,
         child: Scaffold(
@@ -100,7 +101,9 @@ class _AuthViewPage extends State<AuthView> {
                             _passwordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Theme.of(context).primaryColorDark,
+                            color: _isFocusPassword
+                                ? Theme.of(context).primaryColorDark
+                                : Colors.grey,
                           ),
                           onPressed: () {
                             setState(() {
