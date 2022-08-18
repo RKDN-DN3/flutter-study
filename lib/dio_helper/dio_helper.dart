@@ -20,7 +20,7 @@ class DioHelper {
     return null;
   }
 
-  Future<Map<String, dynamic>?> post(String url, var data) async {
+  Future<Map<String, dynamic>?> post(String url, dynamic data) async {
     try {
       var response = await dio.post(url, data: data);
       if (response.statusCode == 200) {

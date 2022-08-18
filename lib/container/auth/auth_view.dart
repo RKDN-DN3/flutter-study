@@ -24,6 +24,9 @@ class _AuthViewPage extends State<AuthView> {
     _passwordVisible = false;
     _isFocusEmail = false;
     _isFocusPassword = false;
+
+    AuthProvider authNotifier =
+        Provider.of<AuthProvider>(context, listen: false);
   }
 
   @override
@@ -32,6 +35,14 @@ class _AuthViewPage extends State<AuthView> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     S lang = S.of(context);
+
+    authNotifier.addListener(() {
+      if (authNotifier.isSuccess) {
+        Navigator.pushReplacementNamed(context, HOME);
+        authNotifier.removeListener(() {});
+      }
+    });
+
     return SafeArea(
         top: true,
         child: Scaffold(
@@ -51,6 +62,7 @@ class _AuthViewPage extends State<AuthView> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: lang.account,
+                      // hintText: lang.please_input_you_email,
                       prefixIconConstraints: BoxConstraints(
                         maxHeight: 25,
                         maxWidth: width * 0.1,
@@ -79,6 +91,7 @@ class _AuthViewPage extends State<AuthView> {
                     child: TextFormField(
                       onChanged: (text) => authNotifier.changePassword(text),
                       keyboardType: TextInputType.text,
+                      // controller: _userPasswordController,
                       obscureText: !_passwordVisible,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
@@ -140,5 +153,7 @@ class _AuthViewPage extends State<AuthView> {
         ));
   }
 }
+
+void onClick() {}
 
 void onForgotPassword() {}

@@ -1,10 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'package:example_flutter/model/data/user.dart';
+import 'package:example_flutter/model/rest/api_result.dart';
+import 'package:example_flutter/repository/auth_repository.dart';
 import 'package:flutter/foundation.dart';
 
 class AuthProvider extends ChangeNotifier {
   String _username = "";
   String _password = "";
   bool isSuccess = false;
+  String error = "";
 
   String getUserName() => _username;
 
@@ -20,9 +25,16 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void login() {
+  Future<void> login() async {
     User user = User(username: _username, password: _password);
-    isSuccess = true;
-    notifyListeners();
+    await AuthRepository().login(user).then((ApiResult? response) {
+      if (response != null && response.success == true) {
+        String token = response.data!["token"] as String;
+        if (token.isNotEmpty == true) {
+          isSuccess = true;
+          notifyListeners();
+        }
+      }
+    });
   }
 }
