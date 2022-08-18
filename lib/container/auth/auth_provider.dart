@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:example_flutter/generated/l10n.dart';
 import 'package:example_flutter/model/data/user.dart';
 import 'package:example_flutter/model/rest/api_result.dart';
 import 'package:example_flutter/model/state/StateCustom.dart';
@@ -42,7 +43,7 @@ class AuthProvider extends ChangeNotifier {
           return notifyListeners();
         }
       }
-      _state = StateCustom.error(response.message ?? "Lỗi đăng nhập");
+      _state = StateCustom.error(response.message ?? S.current.login_error);
     }).onError((Exception error, stackTrace) {
       _state = StateCustom.error(error.toString());
     });

@@ -31,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "input_here": MessageLookupByLibrary.simpleMessage("Nhập tại đây"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+        "login_error": MessageLookupByLibrary.simpleMessage("Đăng nhập lỗi"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "please_input_you_email":
             MessageLookupByLibrary.simpleMessage("Vui lòng nhập email của bạn"),
