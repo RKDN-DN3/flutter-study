@@ -8,7 +8,6 @@ import '../model/data/user.dart';
 class AuthRepository {
   Future<ApiResult> login(User user) async {
     ApiResult result = ApiResult();
-
     var response = await DioHelper().post("auth/login", user.toJson());
     result = ApiResult.fromJson(response!);
     return result;
