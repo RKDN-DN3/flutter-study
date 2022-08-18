@@ -5,6 +5,7 @@ import 'package:example_flutter/model/data/user.dart';
 import 'package:example_flutter/model/rest/api_result.dart';
 import 'package:example_flutter/model/state/StateCustom.dart';
 import 'package:example_flutter/repository/auth_repository.dart';
+import 'package:example_flutter/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -39,6 +40,7 @@ class AuthProvider extends ChangeNotifier {
       if (response != null && response.success == true) {
         String token = response.data!["token"] as String;
         if (token.isNotEmpty == true) {
+          LocalStorageHelper().saveToken(token);
           _state = StateCustom.success(true);
           return notifyListeners();
         }
