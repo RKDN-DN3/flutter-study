@@ -1,6 +1,7 @@
 import 'package:example_flutter/container/auth/auth_provider.dart';
 import 'package:example_flutter/routers/root_router.dart';
 import 'package:example_flutter/container/home/home_provider.dart';
+import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       routes: rootRouter,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: '/auth',
+      initialRoute: HOME,
     );
   }
 }

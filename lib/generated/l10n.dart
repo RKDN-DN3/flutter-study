@@ -139,6 +139,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Login error`
+  String get login_error {
+    return Intl.message(
+      'Login error',
+      name: 'login_error',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
