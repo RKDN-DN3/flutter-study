@@ -1,3 +1,4 @@
+import 'package:example_flutter/container/auth/auth_provider.dart';
 import 'package:example_flutter/routers/root_router.dart';
 import 'package:example_flutter/container/home/home_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider())
       ],
       child: const MyApp(),
     ),
