@@ -1,10 +1,12 @@
 import 'package:example_flutter/container/auth/auth_provider.dart';
-import 'package:example_flutter/model/data/user.dart';
+import 'package:example_flutter/model/state/StateCustom.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../generated/l10n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../model/state/StateCustom.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({Key? key}) : super(key: key);
@@ -37,9 +39,14 @@ class _AuthViewPage extends State<AuthView> {
     S lang = S.of(context);
 
     authNotifier.addListener(() {
-      if (authNotifier.isSuccess) {
+      var state = authNotifier.getState();
+      if (state is SuccessStateCustom && state.isSuccess) {
         Navigator.pushReplacementNamed(context, HOME);
         authNotifier.removeListener(() {});
+      }
+      if (state is ErrorStateCustom && state.msg.isNotEmpty == true) {
+        _showMyDialog(context, state.msg);
+        authNotifier.removeStateError();
       }
     });
 
@@ -157,3 +164,30 @@ class _AuthViewPage extends State<AuthView> {
 void onClick() {}
 
 void onForgotPassword() {}
+
+Future<void> _showMyDialog(BuildContext context, String message) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('AlertDialog Title'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(message),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Approve'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
