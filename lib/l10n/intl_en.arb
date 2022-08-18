@@ -6,5 +6,6 @@
   "password": "Password",
   "input_here": "Input here",
   "please_input_you_password": "Please input you password",
-  "please_input_you_email": "Please input you email"
+  "please_input_you_email": "Please input you email",
+  "forgot_password": "Forgot password ?"
 }

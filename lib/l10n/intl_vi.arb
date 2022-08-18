@@ -6,5 +6,6 @@
   "password": "Mật khẩu",
   "input_here": "Nhập tại đây",
   "please_input_you_password": "Vui lòng nhập mật khẩu",
-  "please_input_you_email": "Vui lòng nhập email của bạn"
+  "please_input_you_email": "Vui lòng nhập email của bạn",
+  "forgot_password": "Quên mật khẩu ?"
 }
