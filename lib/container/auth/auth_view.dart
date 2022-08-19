@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../generated/l10n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../model/state/state_custom.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class AuthView extends StatefulWidget {
   const AuthView({Key? key}) : super(key: key);

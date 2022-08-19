@@ -1,7 +1,5 @@
 import 'package:example_flutter/model/data/chat.dart';
-import 'package:example_flutter/model/data/user.dart';
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class HomeProvider extends ChangeNotifier {

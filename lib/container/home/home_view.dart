@@ -1,19 +1,12 @@
 // ignore_for_file: avoid_print
 
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:example_flutter/container/home/home_provider.dart';
 import 'package:example_flutter/utils/constant.dart';
 import 'package:example_flutter/utils/local_storage.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:socket_io_client/socket_io_client.dart';
 import '../../generated/l10n.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../model/data/chat.dart';
 
