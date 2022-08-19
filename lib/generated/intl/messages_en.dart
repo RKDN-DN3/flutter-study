@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "please_input_you_email":
             MessageLookupByLibrary.simpleMessage("Please input you email"),
         "please_input_you_password":
-            MessageLookupByLibrary.simpleMessage("Please input you password")
+            MessageLookupByLibrary.simpleMessage("Please input you password"),
+        "send": MessageLookupByLibrary.simpleMessage("Send")
       };
 }

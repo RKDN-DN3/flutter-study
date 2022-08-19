@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:example_flutter/model/data/chat.dart';
+import 'package:example_flutter/utils/constant.dart';
+import 'package:example_flutter/utils/socket_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -15,7 +17,7 @@ class HomeProvider extends ChangeNotifier {
   final ScrollController _scrollController = ScrollController();
 
   Socket socket = io(
-      "http://10.20.22.173:3000",
+      SocketConfig.URL_SOCKET,
       OptionBuilder().setTransports(['websocket']).setExtraHeaders(
           {'foo': 'bar'}).build());
 
@@ -44,17 +46,15 @@ class HomeProvider extends ChangeNotifier {
     socket.onDisconnect((_) {
       _currentIdSocket = "";
     });
-    socket.on("sendDataServer", (data) {
-      listDataChat.add(Chat.fromJson(data));
-      notifyListeners();
-    });
-    socket.on("new_message_chat", (data) {
+
+    socket.on(SocketConfig.NEW_MESSAGE_EVENT, (data) {
+      print("data $data");
       Chat chatData = Chat.fromJson(Map<String, dynamic>.from(data));
       listDataChat.add(chatData);
       notifyListeners();
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.fastOutSlowIn,
       );
     });
@@ -62,7 +62,7 @@ class HomeProvider extends ChangeNotifier {
 
   void sendMessage() {
     Chat data = Chat(content: _message, id: _currentIdSocket);
-    socket.emit('sendChatMessage', data);
+    socket.emit(SocketConfig.SEND_MESSAGE_EVENT, data);
     _message = "";
     _controller.clear();
     notifyListeners();

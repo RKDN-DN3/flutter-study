@@ -84,30 +84,24 @@ class _HomeViewPage extends State<HomeView>
     double height = MediaQuery.of(context).size.height;
     var _controller = TextEditingController();
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        SizedBox(
-            width: 200,
-            height: height * 0.1,
-            child: TextFormField(
-                controller: homeProvider.getTextEditController(),
-                onChanged: (text) => homeProvider.setMessage(text),
-                decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: lang.password,
-                    prefixIconConstraints: BoxConstraints(
-                      maxHeight: height * 0.1,
-                      maxWidth: width * 0.1,
-                    )))),
+        SizedBox(width: width * 0.02),
+        Expanded(
+            child: TextField(
+          controller: homeProvider.getTextEditController(),
+          onChanged: (text) => homeProvider.setMessage(text),
+        )),
+        SizedBox(width: width * 0.02),
         MaterialButton(
-          minWidth: width * 0.4,
+          minWidth: width * 0.2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
           color: Colors.blue,
           onPressed: homeProvider.sendMessage,
-          child: const Text("SEND",
-              style: TextStyle(fontSize: 16.0, color: Colors.white)),
+          child: Text(lang.send,
+              style: const TextStyle(fontSize: 16.0, color: Colors.white)),
         ),
       ],
     );
@@ -149,6 +143,8 @@ class _HomeViewPage extends State<HomeView>
   }
 
   Widget renderItem(Chat data, String currentId) {
+    String? content =
+        data.content?.isNotEmpty == true ? data.content : "Tin nhắn rỗng";
     return Align(
         alignment:
             currentId != data.id ? Alignment.centerLeft : Alignment.centerRight,
@@ -164,7 +160,7 @@ class _HomeViewPage extends State<HomeView>
               ),
               borderRadius: const BorderRadius.all(Radius.circular(3))),
           child: Text(
-            data.content ?? "Tin nhắn bị gỡ",
+            content!,
             textAlign: TextAlign.center,
           ),
         ));
