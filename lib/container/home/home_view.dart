@@ -60,6 +60,7 @@ class _HomeViewPage extends State<HomeView> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: width * 0.05),
                 ),
+                SizedBox(height: height * 0.02),
                 Expanded(
                     child: Align(
                   alignment: Alignment.center,
@@ -75,9 +76,8 @@ class _HomeViewPage extends State<HomeView> {
                     ),
                     color: Colors.blue,
                     onPressed: homeNotifier.sendMessage,
-                    child: Text("SEND",
-                        style: const TextStyle(
-                            fontSize: 16.0, color: Colors.white)),
+                    child: const Text("SEND",
+                        style: TextStyle(fontSize: 16.0, color: Colors.white)),
                   ),
                 )
               ],
@@ -85,26 +85,36 @@ class _HomeViewPage extends State<HomeView> {
           ),
         )));
   }
-}
 
-Widget renderList(BuildContext context, List<Chat> listData, String currentId) {
-  return ListView.builder(
-      itemCount: listData.length,
-      itemBuilder: (BuildContext context, int index) {
-        Chat data = listData[index];
-        return Align(
-            alignment: currentId != data.id
-                ? Alignment.centerLeft
-                : Alignment.centerRight,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(10),
+  Widget renderItem(Chat data, String currentId) {
+    return Align(
+        alignment:
+            currentId != data.id ? Alignment.centerLeft : Alignment.centerRight,
+        child: Container(
+          constraints:
+              BoxConstraints(minHeight: 15, minWidth: 200, maxHeight: 400),
+          margin: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: currentId != data.id ? Colors.blue : Colors.white,
+              border: Border.all(
+                color: currentId != data.id ? Colors.blue : Colors.white,
               ),
-              color: Colors.white,
-              margin: EdgeInsets.all(5),
-              padding: EdgeInsets.all(2),
-              child: Text(data.content!),
-            ));
-      });
+              borderRadius: const BorderRadius.all(Radius.circular(3))),
+          child: Text(
+            data.content!,
+            textAlign: TextAlign.center,
+          ),
+        ));
+  }
+
+  Widget renderList(
+      BuildContext context, List<Chat> listData, String currentId) {
+    return ListView.builder(
+        itemCount: listData.length,
+        itemBuilder: (BuildContext context, int index) {
+          Chat data = listData[index];
+          return renderItem(data, currentId);
+        });
+  }
 }
