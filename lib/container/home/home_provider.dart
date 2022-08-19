@@ -9,10 +9,12 @@ class HomeProvider extends ChangeNotifier {
   int get count => _count;
   String _currentIdSocket = "";
   Socket socket = io(
-      "http://10.20.23.1:3000",
+      "http://10.20.22.173:3000",
       OptionBuilder().setTransports(['websocket']).setExtraHeaders(
           {'foo': 'bar'}).build());
   List<Chat> listDataChat = [];
+
+  String getCurrentIdSocket() => _currentIdSocket;
 
   void increment() {
     _count++;
@@ -26,29 +28,26 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> connectToServer() async {
     socket.connect();
-    socket.onConnectError((connect) {
-      print('onConnectError: $connect');
-      socket.emit('chatMessage', 'test');
-    });
+    socket.onConnectError((connect) {});
     socket.onConnect((_) {
-      print('connect');
-      socket.emit('chatMessage', 'test');
+      _currentIdSocket = socket.id!;
     });
     socket.onDisconnect((_) {
-      print('disconnect');
+      _currentIdSocket = "";
     });
-
-    socket.on("getId", (data) {
-      _currentIdSocket = data;
-    });
-
     socket.on("sendDataServer", (data) {
       listDataChat.add(Chat.fromJson(data));
+      notifyListeners();
+    });
+    socket.on("new_message_chat", (data) {
+      Chat chatData = Chat.fromJson(Map<String, dynamic>.from(data));
+      listDataChat.add(chatData);
       notifyListeners();
     });
   }
 
   void sendMessage() {
-    socket.emit('sendDataClient', 'test');
+    Chat data = Chat(content: "Test message", id: _currentIdSocket);
+    socket.emit('sendChatMessage', data);
   }
 }

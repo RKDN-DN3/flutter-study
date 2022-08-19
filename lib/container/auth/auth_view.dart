@@ -1,11 +1,11 @@
 import 'package:example_flutter/container/auth/auth_provider.dart';
-import 'package:example_flutter/model/state/StateCustom.dart';
+import 'package:example_flutter/model/state/state_custom.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../generated/l10n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../model/state/StateCustom.dart';
+import '../../model/state/state_custom.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class AuthView extends StatefulWidget {
