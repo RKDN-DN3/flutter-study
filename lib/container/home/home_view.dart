@@ -24,7 +24,11 @@ class HomeView extends StatefulWidget {
   State<StatefulWidget> createState() => _HomeViewPage();
 }
 
-class _HomeViewPage extends State<HomeView> {
+class _HomeViewPage extends State<HomeView>
+    with SingleTickerProviderStateMixin {
+  late Animation _arrowAnimation;
+  late AnimationController _arrowAnimationController;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +37,10 @@ class _HomeViewPage extends State<HomeView> {
     HomeProvider homeProvider =
         Provider.of<HomeProvider>(context, listen: false);
     homeProvider.connectToServer();
+    _arrowAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+    _arrowAnimation =
+        Tween(begin: 0.0, end: 10.0).animate(_arrowAnimationController);
   }
 
   @override
@@ -79,6 +87,7 @@ class _HomeViewPage extends State<HomeView> {
                     child: const Text("SEND",
                         style: TextStyle(fontSize: 16.0, color: Colors.white)),
                   ),
+                  // child: firstChild(),
                 )
               ],
             ),
@@ -86,13 +95,48 @@ class _HomeViewPage extends State<HomeView> {
         )));
   }
 
+  Widget firstChild() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        AnimatedBuilder(
+          animation: _arrowAnimationController,
+          builder: (context, child) => Transform.rotate(
+            angle: _arrowAnimation.value,
+            child: const Icon(
+              Icons.expand_more,
+              size: 50.0,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        MaterialButton(
+          color: Colors.white,
+          textColor: Colors.black,
+          padding: const EdgeInsets.all(12.0),
+          onPressed: () {
+            // _arrowAnimationController.isCompleted
+            //     ? _arrowAnimationController.reverse()
+            //     : _arrowAnimationController.forward();
+            _arrowAnimationController.repeat();
+          },
+          onLongPress: () {
+            _arrowAnimationController.stop();
+          },
+          splashColor: Colors.red,
+          child: const Text('Start Icon Animation'),
+        )
+      ],
+    );
+  }
+
   Widget renderItem(Chat data, String currentId) {
     return Align(
         alignment:
             currentId != data.id ? Alignment.centerLeft : Alignment.centerRight,
         child: Container(
-          constraints:
-              BoxConstraints(minHeight: 15, minWidth: 200, maxHeight: 400),
+          constraints: const BoxConstraints(
+              minHeight: 15, minWidth: 200, maxHeight: 400),
           margin: const EdgeInsets.all(5),
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
