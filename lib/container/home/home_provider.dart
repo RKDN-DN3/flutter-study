@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:example_flutter/model/data/chat.dart';
 import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -38,6 +40,7 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     });
     socket.on("new_message_chat", (data) {
+      print("new message ${data}");
       Chat chatData = Chat.fromJson(Map<String, dynamic>.from(data));
       listDataChat.add(chatData);
       notifyListeners();
@@ -47,5 +50,6 @@ class HomeProvider extends ChangeNotifier {
   void sendMessage() {
     Chat data = Chat(content: "Test message", id: _currentIdSocket);
     socket.emit('sendChatMessage', data);
+    notifyListeners();
   }
 }

@@ -5,9 +5,10 @@ import 'package:example_flutter/utils/constant.dart';
 import 'package:example_flutter/utils/local_storage.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../generated/l10n.dart';
-
 import '../../model/data/chat.dart';
 
 class HomeView extends StatefulWidget {
@@ -21,15 +22,15 @@ class _HomeViewPage extends State<HomeView>
     with SingleTickerProviderStateMixin {
   late Animation _arrowAnimation;
   late AnimationController _arrowAnimationController;
+  late HomeProvider homeProvider;
 
   @override
   void initState() {
     super.initState();
     LocalStorageHelper().getToken().then((value) =>
         value.isEmpty ? Navigator.restorablePushNamed(context, AUTH) : null);
-    HomeProvider homeProvider =
-        Provider.of<HomeProvider>(context, listen: false);
-    homeProvider.connectToServer();
+    Provider.of<HomeProvider>(context, listen: false).connectToServer();
+
     _arrowAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
     _arrowAnimation =
@@ -38,10 +39,10 @@ class _HomeViewPage extends State<HomeView>
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider homeNotifier = Provider.of<HomeProvider>(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     S lang = S.of(context);
+    homeProvider = Provider.of<HomeProvider>(context);
     return SafeArea(
         top: true,
         bottom: true,
@@ -65,27 +66,48 @@ class _HomeViewPage extends State<HomeView>
                 Expanded(
                     child: Align(
                   alignment: Alignment.center,
-                  child: renderList(context, homeNotifier.listDataChat,
-                      homeNotifier.getCurrentIdSocket()),
+                  child: renderList(context, homeProvider.listDataChat,
+                      homeProvider.getCurrentIdSocket()),
                 )),
                 Align(
-                  alignment: Alignment.bottomCenter,
-                  child: MaterialButton(
-                    minWidth: width * 0.4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    color: Colors.blue,
-                    onPressed: homeNotifier.sendMessage,
-                    child: const Text("SEND",
-                        style: TextStyle(fontSize: 16.0, color: Colors.white)),
-                  ),
-                  // child: firstChild(),
-                )
+                    alignment: Alignment.bottomCenter,
+                    child: renderInputAndSend(context))
               ],
             ),
           ),
         )));
+  }
+
+  Widget renderInputAndSend(BuildContext context) {
+    S lang = S.of(context);
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Container(
+            width: 200,
+            height: height * 0.1,
+            child: TextFormField(
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: lang.password,
+                    prefixIconConstraints: BoxConstraints(
+                      maxHeight: height * 0.1,
+                      maxWidth: width * 0.1,
+                    )))),
+        MaterialButton(
+          minWidth: width * 0.4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          color: Colors.blue,
+          onPressed: homeProvider.sendMessage,
+          child: const Text("SEND",
+              style: TextStyle(fontSize: 16.0, color: Colors.white)),
+        ),
+      ],
+    );
   }
 
   Widget firstChild() {
