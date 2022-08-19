@@ -82,13 +82,16 @@ class _HomeViewPage extends State<HomeView>
     S lang = S.of(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    var _controller = TextEditingController();
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Container(
+        SizedBox(
             width: 200,
             height: height * 0.1,
             child: TextFormField(
+                controller: homeProvider.getTextEditController(),
+                onChanged: (text) => homeProvider.setMessage(text),
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: lang.password,
