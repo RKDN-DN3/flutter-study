@@ -6,21 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class HomeProvider extends ChangeNotifier {
+  int _count = 0;
+  int get count => _count;
+  String _currentIdSocket = "";
+  final TextEditingController _controller = TextEditingController();
+  List<Chat> listDataChat = [];
+  String _message = "";
+  final ScrollController _scrollController = ScrollController();
+
   Socket socket = io(
       "http://10.20.22.173:3000",
       OptionBuilder().setTransports(['websocket']).setExtraHeaders(
           {'foo': 'bar'}).build());
-  int _count = 0;
-  int get count => _count;
-  String _currentIdSocket = "";
-  TextEditingController _controller = TextEditingController();
-  List<Chat> listDataChat = [];
-  String _message = "";
+
+  ScrollController getScrollController() => _scrollController;
   TextEditingController getTextEditController() => _controller;
+  String getCurrentIdSocket() => _currentIdSocket;
 
   void setMessage(String text) => _message = text;
-
-  String getCurrentIdSocket() => _currentIdSocket;
 
   void increment() {
     _count++;
@@ -46,10 +49,14 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     });
     socket.on("new_message_chat", (data) {
-      print("new message ${data}");
       Chat chatData = Chat.fromJson(Map<String, dynamic>.from(data));
       listDataChat.add(chatData);
       notifyListeners();
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn,
+      );
     });
   }
 

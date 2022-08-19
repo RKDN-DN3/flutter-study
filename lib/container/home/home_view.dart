@@ -173,6 +173,7 @@ class _HomeViewPage extends State<HomeView>
   Widget renderList(
       BuildContext context, List<Chat> listData, String currentId) {
     return ListView.builder(
+        controller: homeProvider.getScrollController(),
         itemCount: listData.length,
         itemBuilder: (BuildContext context, int index) {
           Chat data = listData[index];
