@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:example_flutter/model/data/chat.dart';
+import 'package:example_flutter/repository/employee_repository.dart';
 import 'package:example_flutter/utils/constant.dart';
 import 'package:example_flutter/utils/socket_config.dart';
 import 'package:flutter/foundation.dart';
@@ -66,5 +67,11 @@ class HomeProvider extends ChangeNotifier {
     _message = "";
     _controller.clear();
     notifyListeners();
+  }
+
+  Future<void> getListEmployee() async {
+    await EmployeeRepository()
+        .getListEmployee()
+        .then((value) => {print("getListEmployee $value")});
   }
 }

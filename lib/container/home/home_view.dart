@@ -28,9 +28,10 @@ class _HomeViewPage extends State<HomeView>
   void initState() {
     super.initState();
     LocalStorageHelper().getToken().then((value) =>
-        value.isEmpty ? Navigator.restorablePushNamed(context, AUTH) : null);
-    Provider.of<HomeProvider>(context, listen: false).connectToServer();
-
+        value.isEmpty ? {Navigator.restorablePushNamed(context, AUTH)} : null);
+    var provider = Provider.of<HomeProvider>(context, listen: false);
+    provider.connectToServer();
+    provider.getListEmployee();
     _arrowAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
     _arrowAnimation =
@@ -103,41 +104,6 @@ class _HomeViewPage extends State<HomeView>
           child: Text(lang.send,
               style: const TextStyle(fontSize: 16.0, color: Colors.white)),
         ),
-      ],
-    );
-  }
-
-  Widget firstChild() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        AnimatedBuilder(
-          animation: _arrowAnimationController,
-          builder: (context, child) => Transform.rotate(
-            angle: _arrowAnimation.value,
-            child: const Icon(
-              Icons.expand_more,
-              size: 50.0,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        MaterialButton(
-          color: Colors.white,
-          textColor: Colors.black,
-          padding: const EdgeInsets.all(12.0),
-          onPressed: () {
-            // _arrowAnimationController.isCompleted
-            //     ? _arrowAnimationController.reverse()
-            //     : _arrowAnimationController.forward();
-            _arrowAnimationController.repeat();
-          },
-          onLongPress: () {
-            _arrowAnimationController.stop();
-          },
-          splashColor: Colors.red,
-          child: const Text('Start Icon Animation'),
-        )
       ],
     );
   }
