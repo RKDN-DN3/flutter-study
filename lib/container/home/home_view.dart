@@ -153,8 +153,8 @@ class _HomeViewPage extends State<HomeView>
         alignment:
             currentId != data.id ? Alignment.centerLeft : Alignment.centerRight,
         child: Container(
-          constraints: const BoxConstraints(
-              minHeight: 15, minWidth: 200, maxHeight: 400),
+          constraints:
+              const BoxConstraints(minHeight: 15, minWidth: 20, maxHeight: 400),
           margin: const EdgeInsets.all(5),
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
@@ -164,7 +164,7 @@ class _HomeViewPage extends State<HomeView>
               ),
               borderRadius: const BorderRadius.all(Radius.circular(3))),
           child: Text(
-            data.content!,
+            data.content ?? "Tin nhắn bị gỡ",
             textAlign: TextAlign.center,
           ),
         ));
