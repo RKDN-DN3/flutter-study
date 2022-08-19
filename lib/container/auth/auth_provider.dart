@@ -3,7 +3,7 @@
 import 'package:example_flutter/generated/l10n.dart';
 import 'package:example_flutter/model/data/user.dart';
 import 'package:example_flutter/model/rest/api_result.dart';
-import 'package:example_flutter/model/state/StateCustom.dart';
+import 'package:example_flutter/model/state/state_custom.dart';
 import 'package:example_flutter/repository/auth_repository.dart';
 import 'package:example_flutter/utils/local_storage.dart';
 import 'package:flutter/material.dart';
