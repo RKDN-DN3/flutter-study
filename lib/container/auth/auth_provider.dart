@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:example_flutter/generated/l10n.dart';
 import 'package:example_flutter/model/data/user.dart';
 import 'package:example_flutter/model/rest/api_result.dart';
@@ -15,24 +13,21 @@ class AuthProvider extends ChangeNotifier {
   String error = "";
   StateCustom? _state;
 
-  String getUserName() => _username;
-  StateCustom? getState() => _state;
-  String getPassword() => _password;
+  void changePassword(String text) {
+    _password = text;
+    notifyListeners();
+  }
 
   void changeUsername(String text) {
     _username = text;
     notifyListeners();
   }
 
-  void removeStateError() {
-    _state = StateCustom.error("");
-    notifyListeners();
-  }
+  String getPassword() => _password;
 
-  void changePassword(String text) {
-    _password = text;
-    notifyListeners();
-  }
+  StateCustom? getState() => _state;
+
+  String getUserName() => _username;
 
   Future<void> login() async {
     User user = User(username: _username, password: _password);
@@ -49,6 +44,11 @@ class AuthProvider extends ChangeNotifier {
     }).onError((Exception error, stackTrace) {
       _state = StateCustom.error(error.toString());
     });
+    notifyListeners();
+  }
+
+  void removeStateError() {
+    _state = StateCustom.error("");
     notifyListeners();
   }
 }

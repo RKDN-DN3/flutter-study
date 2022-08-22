@@ -9,38 +9,18 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 class HomeProvider extends ChangeNotifier {
   int _count = 0;
-  int get count => _count;
   String _currentIdSocket = "";
   final TextEditingController _controller = TextEditingController();
   List<Chat> listDataChat = [];
   String _message = "";
   final ScrollController _scrollController = ScrollController();
   StateCustom? _state;
-
   Socket socket = io(
       SocketConfig.URL_SOCKET,
       OptionBuilder().setTransports(['websocket']).setExtraHeaders(
           {'foo': 'bar'}).build());
 
-  ScrollController getScrollController() => _scrollController;
-
-  TextEditingController getTextEditController() => _controller;
-
-  String getCurrentIdSocket() => _currentIdSocket;
-
-  StateCustom? getState() => _state;
-
-  void setMessage(String text) => _message = text;
-
-  void increment() {
-    _count++;
-    notifyListeners();
-  }
-
-  void decrement() {
-    _count--;
-    notifyListeners();
-  }
+  int get count => _count;
 
   Future<void> connectToServer() async {
     socket.connect();
@@ -65,6 +45,30 @@ class HomeProvider extends ChangeNotifier {
     });
   }
 
+  void decrement() {
+    _count--;
+    notifyListeners();
+  }
+
+  String getCurrentIdSocket() => _currentIdSocket;
+
+  Future<void> getListEmployee() async {
+    await EmployeeRepository().getListEmployee().then((value) {
+      print("getListEmployee $value");
+    });
+  }
+
+  ScrollController getScrollController() => _scrollController;
+
+  StateCustom? getState() => _state;
+
+  TextEditingController getTextEditController() => _controller;
+
+  void increment() {
+    _count++;
+    notifyListeners();
+  }
+
   void sendMessage() {
     if (_message.isNotEmpty) {
       Chat data = Chat(content: _message, id: _currentIdSocket);
@@ -77,9 +81,5 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getListEmployee() async {
-    await EmployeeRepository().getListEmployee().then((value) {
-      print("getListEmployee $value");
-    });
-  }
+  void setMessage(String text) => _message = text;
 }
