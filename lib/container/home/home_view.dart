@@ -6,11 +6,37 @@ import 'package:example_flutter/utils/constant.dart';
 import 'package:example_flutter/utils/local_storage.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
 import '../../generated/l10n.dart';
 import '../../model/data/chat.dart';
+
+Future<void> _showMyDialog(BuildContext context, String message) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(S.of(context).notification),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(message),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(S.of(context).approve),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -21,30 +47,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewPage extends State<HomeView>
     with SingleTickerProviderStateMixin {
-  late Animation _arrowAnimation;
-  late AnimationController _arrowAnimationController;
   late HomeProvider homeProvider;
-
-  @override
-  void initState() {
-    super.initState();
-    LocalStorageHelper().getToken().then((value) {
-      value.isEmpty ? {Navigator.restorablePushNamed(context, AUTH)} : null;
-    });
-    var provider = Provider.of<HomeProvider>(context, listen: false);
-    provider.connectToServer();
-    provider.getListEmployee();
-    _arrowAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-    _arrowAnimation =
-        Tween(begin: 0.0, end: 10.0).animate(_arrowAnimationController);
-    provider.addListener(() {
-      StateCustom? state = provider.getState();
-      if (state != null && state is ErrorStateCustom && state.msg.isNotEmpty) {
-        _showMyDialog(context, state.msg);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,11 +90,27 @@ class _HomeViewPage extends State<HomeView>
         )));
   }
 
+  @override
+  void initState() {
+    super.initState();
+    LocalStorageHelper().getToken().then((value) {
+      value.isEmpty ? {Navigator.restorablePushNamed(context, AUTH)} : null;
+    });
+    var provider = Provider.of<HomeProvider>(context, listen: false);
+    provider.connectToServer();
+    provider.getListEmployee();
+    provider.addListener(() {
+      StateCustom? state = provider.getState();
+      if (state != null && state is ErrorStateCustom && state.msg.isNotEmpty) {
+        _showMyDialog(context, state.msg);
+        provider.clearError();
+      }
+    });
+  }
+
   Widget renderInputAndSend(BuildContext context) {
     S lang = S.of(context);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    var _controller = TextEditingController();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -151,31 +170,4 @@ class _HomeViewPage extends State<HomeView>
           return renderItem(data, currentId, context);
         });
   }
-}
-
-Future<void> _showMyDialog(BuildContext context, String message) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('AlertDialog Title'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(message),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Approve'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

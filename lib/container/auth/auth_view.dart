@@ -1,11 +1,10 @@
 import 'package:example_flutter/container/auth/auth_provider.dart';
+import 'package:example_flutter/generated/l10n.dart';
 import 'package:example_flutter/model/state/state_custom.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../generated/l10n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../model/state/state_custom.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({Key? key}) : super(key: key);
@@ -14,7 +13,6 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewPage extends State<AuthView> {
-  final TextEditingController _userPasswordController = TextEditingController();
   bool _passwordVisible = false;
   bool _isFocusEmail = false;
   bool _isFocusPassword = false;
@@ -25,8 +23,6 @@ class _AuthViewPage extends State<AuthView> {
     _passwordVisible = false;
     _isFocusEmail = false;
     _isFocusPassword = false;
-    AuthProvider authNotifier =
-        Provider.of<AuthProvider>(context, listen: false);
   }
 
   @override
@@ -96,7 +92,6 @@ class _AuthViewPage extends State<AuthView> {
                     child: TextFormField(
                       onChanged: (text) => authNotifier.changePassword(text),
                       keyboardType: TextInputType.text,
-                      // controller: _userPasswordController,
                       obscureText: !_passwordVisible,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
@@ -166,7 +161,7 @@ void onForgotPassword() {}
 Future<void> _showMyDialog(BuildContext context, String message) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
         title: const Text('AlertDialog Title'),
