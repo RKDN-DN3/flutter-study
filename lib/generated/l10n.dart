@@ -159,6 +159,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Empty message`
+  String get empty_message {
+    return Intl.message(
+      'Empty message',
+      name: 'empty_message',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

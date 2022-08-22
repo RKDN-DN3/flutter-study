@@ -1,10 +1,9 @@
-import 'dart:developer';
+// ignore_for_file: unused_field
 
 import 'package:example_flutter/model/data/chat.dart';
+import 'package:example_flutter/model/state/state_custom.dart';
 import 'package:example_flutter/repository/employee_repository.dart';
-import 'package:example_flutter/utils/constant.dart';
 import 'package:example_flutter/utils/socket_config.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -16,6 +15,7 @@ class HomeProvider extends ChangeNotifier {
   List<Chat> listDataChat = [];
   String _message = "";
   final ScrollController _scrollController = ScrollController();
+  StateCustom? _state;
 
   Socket socket = io(
       SocketConfig.URL_SOCKET,
@@ -23,8 +23,12 @@ class HomeProvider extends ChangeNotifier {
           {'foo': 'bar'}).build());
 
   ScrollController getScrollController() => _scrollController;
+
   TextEditingController getTextEditController() => _controller;
+
   String getCurrentIdSocket() => _currentIdSocket;
+
+  StateCustom? getState() => _state;
 
   void setMessage(String text) => _message = text;
 
@@ -62,16 +66,20 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void sendMessage() {
-    Chat data = Chat(content: _message, id: _currentIdSocket);
-    socket.emit(SocketConfig.SEND_MESSAGE_EVENT, data);
-    _message = "";
-    _controller.clear();
+    if (_message.isNotEmpty) {
+      Chat data = Chat(content: _message, id: _currentIdSocket);
+      socket.emit(SocketConfig.SEND_MESSAGE_EVENT, data);
+      _message = "";
+      _controller.clear();
+    } else {
+      _state = StateCustom.error("Message is empty");
+    }
     notifyListeners();
   }
 
   Future<void> getListEmployee() async {
-    await EmployeeRepository()
-        .getListEmployee()
-        .then((value) => {print("getListEmployee $value")});
+    await EmployeeRepository().getListEmployee().then((value) {
+      print("getListEmployee $value");
+    });
   }
 }

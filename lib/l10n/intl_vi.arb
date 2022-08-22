@@ -9,5 +9,6 @@
   "please_input_you_email": "Vui lòng nhập email của bạn",
   "forgot_password": "Quên mật khẩu ?",
   "login_error": "Đăng nhập lỗi",
-  "send": "Gửi"
+  "send": "Gửi",
+  "empty_message": "Tin nhắn rỗng"
 }
