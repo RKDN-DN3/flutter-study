@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:example_flutter/utils/local_storage.dart';
 
 class DioHelper {
   Dio dio = Dio(BaseOptions(
@@ -10,6 +11,9 @@ class DioHelper {
 
   Future<Map<String, dynamic>?> get(String url) async {
     try {
+      await LocalStorageHelper().getToken().then((value) {
+        dio.options.headers["Authorization"] = "Bearer $value";
+      });
       var response = await dio.get(url);
       if (response.statusCode == 200) {
         return response.data;
@@ -22,6 +26,9 @@ class DioHelper {
 
   Future<Map<String, dynamic>?> post(String url, dynamic data) async {
     try {
+      await LocalStorageHelper().getToken().then((value) {
+        dio.options.headers["Authorization"] = "Bearer $value";
+      });
       var response = await dio.post(url, data: data);
       if (response.statusCode == 200) {
         return response.data;

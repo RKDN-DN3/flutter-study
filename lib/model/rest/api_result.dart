@@ -11,4 +11,9 @@ class ApiResult {
         message = json["message"],
         errorCode = json["errorCode"],
         data = json["data"];
+
+  @override
+  String toString() {
+    return "{success : $success, message: $message , errorCode : $errorCode , data : $data}";
+  }
 }

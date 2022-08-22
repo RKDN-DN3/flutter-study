@@ -8,5 +8,7 @@
   "please_input_you_password": "Please input you password",
   "please_input_you_email": "Please input you email",
   "forgot_password": "Forgot password ?",
-  "login_error": "Login error"
+  "login_error": "Login error",
+  "send": "Send",
+  "empty_message": "Empty message"
 }
