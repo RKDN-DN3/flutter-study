@@ -14,7 +14,7 @@ import '../../model/data/chat.dart';
 Future<void> _showMyDialog(BuildContext context, String message) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
         title: const Text('AlertDialog Title'),
@@ -103,6 +103,7 @@ class _HomeViewPage extends State<HomeView>
       StateCustom? state = provider.getState();
       if (state != null && state is ErrorStateCustom && state.msg.isNotEmpty) {
         _showMyDialog(context, state.msg);
+        provider.clearError();
       }
     });
   }
@@ -110,7 +111,6 @@ class _HomeViewPage extends State<HomeView>
   Widget renderInputAndSend(BuildContext context) {
     S lang = S.of(context);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
