@@ -10,5 +10,7 @@
   "forgot_password": "Quên mật khẩu ?",
   "login_error": "Đăng nhập lỗi",
   "send": "Gửi",
-  "empty_message": "Tin nhắn rỗng"
+  "empty_message": "Tin nhắn rỗng",
+  "notification": "Thông báo",
+  "approve": "Đồng ý"
 }

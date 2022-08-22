@@ -13,7 +13,6 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewPage extends State<AuthView> {
-  final TextEditingController _userPasswordController = TextEditingController();
   bool _passwordVisible = false;
   bool _isFocusEmail = false;
   bool _isFocusPassword = false;

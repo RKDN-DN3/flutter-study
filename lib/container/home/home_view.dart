@@ -17,7 +17,7 @@ Future<void> _showMyDialog(BuildContext context, String message) async {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('AlertDialog Title'),
+        title: Text(S.of(context).notification),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
@@ -27,7 +27,7 @@ Future<void> _showMyDialog(BuildContext context, String message) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('Approve'),
+            child: Text(S.of(context).approve),
             onPressed: () {
               Navigator.of(context).pop();
             },

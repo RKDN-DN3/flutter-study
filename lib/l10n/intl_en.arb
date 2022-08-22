@@ -10,5 +10,7 @@
   "forgot_password": "Forgot password ?",
   "login_error": "Login error",
   "send": "Send",
-  "empty_message": "Empty message"
+  "empty_message": "Empty message",
+  "notification": "Notification",
+  "approve": "Approve"
 }

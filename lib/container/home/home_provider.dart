@@ -39,7 +39,7 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.fastOutSlowIn,
       );
     });
