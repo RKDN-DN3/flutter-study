@@ -19,6 +19,7 @@ dependencies:
   shared_preferences: ^2.0.15
   socket_io_client: ^2.0.0
   json_annotation: ^4.4.0
+  hmssdk_flutter: ^0.7.5
 dev_dependencies:
   build_runner: ^2.0.0
   json_serializable: ^6.3.1

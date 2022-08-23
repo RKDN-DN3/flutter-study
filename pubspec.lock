@@ -252,6 +252,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  hmssdk_flutter:
+    dependency: "direct main"
+    description:
+      name: hmssdk_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.5"
   http_multi_server:
     dependency: transitive
     description:

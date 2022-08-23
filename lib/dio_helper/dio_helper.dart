@@ -3,7 +3,7 @@ import 'package:example_flutter/utils/local_storage.dart';
 
 class DioHelper {
   Dio dio = Dio(BaseOptions(
-    baseUrl: "http://10.20.22.173:8080/",
+    baseUrl: "http://10.20.22.173:8088/",
     connectTimeout: 6000,
     receiveTimeout: 6000,
     headers: {"content-Type": "application/json"},

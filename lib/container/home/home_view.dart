@@ -7,7 +7,6 @@ import 'package:example_flutter/utils/local_storage.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../generated/l10n.dart';
 import '../../model/data/chat.dart';
 
@@ -117,6 +116,11 @@ class _HomeViewPage extends State<HomeView>
         SizedBox(width: width * 0.02),
         Expanded(
             child: TextField(
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 0.5),
+            ),
+          ),
           controller: homeProvider.getTextEditController(),
           onChanged: (text) => homeProvider.setMessage(text),
         )),
