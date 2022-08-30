@@ -6,6 +6,7 @@ import 'package:example_flutter/utils/constant.dart';
 import 'package:example_flutter/utils/local_storage.dart';
 import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../generated/l10n.dart';
 import '../../model/data/chat.dart';
@@ -61,28 +62,28 @@ class _HomeViewPage extends State<HomeView>
         right: false,
         child: Scaffold(
             body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(image_auth), fit: BoxFit.cover)),
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomCenter,
+                  colors: [Color.fromARGB(255, 3, 36, 78), Colors.black])),
           child: Center(
             child: Column(
               children: [
-                SizedBox(height: height * 0.02),
-                Text(
-                  lang.home,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: width * 0.05),
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Good morning,Sitsiilia!",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
+                  ),
                 ),
-                SizedBox(height: height * 0.02),
-                Expanded(
-                    child: Align(
-                  alignment: Alignment.center,
-                  child: renderList(context, homeProvider.listDataChat,
-                      homeProvider.getCurrentIdSocket()),
-                )),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: renderInputAndSend(context))
+                renderMenu(context, homeProvider.currentMenu)
               ],
             ),
           ),
@@ -131,7 +132,7 @@ class _HomeViewPage extends State<HomeView>
             borderRadius: BorderRadius.circular(10.0),
           ),
           color: Colors.blue,
-          onPressed: homeProvider.sendMessage,
+          onPressed: homeProvider.pickImage,
           child: Text(lang.send,
               style: const TextStyle(fontSize: 16.0, color: Colors.white)),
         ),
@@ -173,5 +174,44 @@ class _HomeViewPage extends State<HomeView>
           Chat data = listData[index];
           return renderItem(data, currentId, context);
         });
+  }
+
+  Widget renderMenu(BuildContext context, String currentItem) {
+    const list = ["search", "Home", "Liked ones", "You library", "Profile"];
+    HomeProvider provider = context.watch<HomeProvider>();
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: list
+            .map((item) => GestureDetector(
+                  onTap: () {
+                    provider.changeCurrentMenu(item);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: provider.currentMenu == item
+                            ? const Border(
+                                bottom: BorderSide(
+                                    width: 1, color: Color(0xFF1ED760)))
+                            : null),
+                    padding: EdgeInsets.all(5),
+                    child: item != "search"
+                        ? Text(
+                            item,
+                            style: TextStyle(
+                                color: provider.currentMenu == item
+                                    ? const Color(0xFF1ED760)
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )
+                        : FaIcon(
+                            FontAwesomeIcons.search,
+                            color: provider.currentMenu == item
+                                ? const Color(0xFF1ED760)
+                                : Colors.white,
+                            size: 18,
+                          ),
+                  ),
+                ))
+            .toList());
   }
 }

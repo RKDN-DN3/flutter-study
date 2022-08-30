@@ -133,7 +133,7 @@ class _AuthViewPage extends State<AuthView> {
                     alignment: Alignment.centerRight,
                     child: MaterialButton(
                       animationDuration: Duration.zero,
-                      onPressed: onForgotPassword,
+                      onPressed: authNotifier.pickImage,
                       child: Text(lang.forgot_password),
                     )),
                 MaterialButton(

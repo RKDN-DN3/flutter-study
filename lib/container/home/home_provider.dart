@@ -1,9 +1,14 @@
 // ignore_for_file: unused_field
 
+import 'package:dio/dio.dart';
+import 'package:example_flutter/repository/upload_repository.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:example_flutter/generated/l10n.dart';
 import 'package:example_flutter/model/data/chat.dart';
+import 'package:example_flutter/model/data/token.dart';
 import 'package:example_flutter/model/state/state_custom.dart';
 import 'package:example_flutter/repository/employee_repository.dart';
+import 'package:example_flutter/repository/livestream_repository.dart';
 import 'package:example_flutter/utils/socket_config.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -13,6 +18,8 @@ class HomeProvider extends ChangeNotifier {
   final ScrollController _scrollController = ScrollController();
   int _count = 0;
   String _currentIdSocket = "";
+  String _token = "";
+  String currentMenu = "Home";
   List<Chat> listDataChat = [];
   String _message = "";
   StateCustom? _state;
@@ -68,21 +75,54 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void sendMessage() {
-    if (_message.isNotEmpty) {
-      Chat data = Chat(content: _message, id: _currentIdSocket);
-      socket.emit(SocketConfig.SEND_MESSAGE_EVENT, data);
-      _message = "";
-      _controller.clear();
-    } else {
-      _state = StateCustom.error(S().empty_message);
+    try {
+      if (_message.isNotEmpty) {
+        Chat data = Chat(content: _message, id: _currentIdSocket);
+        socket.emit(SocketConfig.SEND_MESSAGE_EVENT, data);
+        _message = "";
+        _controller.clear();
+      } else {
+        _state = StateCustom.error(S().empty_message);
+      }
+      notifyListeners();
+    } catch (e) {
+      print("error $e");
     }
-    notifyListeners();
   }
 
   void setMessage(String text) => _message = text;
 
   void clearError() {
     _state = StateCustom.error("");
+    notifyListeners();
+  }
+
+  Future<void> getToken() async {
+    Token token =
+        Token(room_id: "TuPM", user_id: "tupt", role: "new-role-7124");
+    LiveStreamRepository().generateToken(token).then((value) {
+      _token = value.data;
+    });
+  }
+
+  Future<void> pickImage() async {
+    try {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(image!.path,
+            filename: image.path.split('/').last),
+      });
+      UploadRepository().uploadImage(formData).then((value) {
+        print("value ${value}");
+      });
+    } catch (e) {
+      print("error $e");
+    }
+  }
+
+  void changeCurrentMenu(String value) {
+    currentMenu = value;
     notifyListeners();
   }
 }
