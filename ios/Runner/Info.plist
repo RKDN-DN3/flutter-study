@@ -28,6 +28,12 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>App wants to use your microphone</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App wants to use your camera</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>App wants to use your local network</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

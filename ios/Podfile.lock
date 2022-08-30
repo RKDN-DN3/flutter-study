@@ -1,22 +1,43 @@
 PODS:
   - Flutter (1.0.0)
+  - HMSBroadcastExtensionSDK (0.0.2)
+  - HMSSDK (0.3.3):
+    - HMSWebRTC (= 1.0.4898)
+  - hmssdk_flutter (0.7.5):
+    - Flutter
+    - HMSBroadcastExtensionSDK (= 0.0.2)
+    - HMSSDK (= 0.3.3)
+  - HMSWebRTC (1.0.4898)
   - shared_preferences_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - hmssdk_flutter (from `.symlinks/plugins/hmssdk_flutter/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+
+SPEC REPOS:
+  trunk:
+    - HMSBroadcastExtensionSDK
+    - HMSSDK
+    - HMSWebRTC
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  hmssdk_flutter:
+    :path: ".symlinks/plugins/hmssdk_flutter/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  HMSBroadcastExtensionSDK: 2c3bf5b25453459d60799697bab1e30576690ab5
+  HMSSDK: 7c9d01559f1ac06cea982097138c1d3c836df0ae
+  hmssdk_flutter: 81d3fee132241d40e290c71cb238b2de11c82cf7
+  HMSWebRTC: d3a9b2866e4a36a1d3834728a548a4a46309bb86
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
 
 COCOAPODS: 1.11.3

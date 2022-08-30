@@ -1,10 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:example_flutter/generated/l10n.dart';
 import 'package:example_flutter/model/data/user.dart';
 import 'package:example_flutter/model/rest/api_result.dart';
 import 'package:example_flutter/model/state/state_custom.dart';
 import 'package:example_flutter/repository/auth_repository.dart';
+import 'package:example_flutter/repository/upload_repository.dart';
 import 'package:example_flutter/utils/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthProvider extends ChangeNotifier {
   String _username = "";
@@ -50,5 +53,17 @@ class AuthProvider extends ChangeNotifier {
   void removeStateError() {
     _state = StateCustom.error("");
     notifyListeners();
+  }
+
+  Future<void> pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(image!.path,
+          filename: image.path.split('/').last),
+    });
+    UploadRepository().uploadImage(formData).then((value) {
+      print("value ${value}");
+    });
   }
 }
