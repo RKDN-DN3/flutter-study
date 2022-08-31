@@ -35,7 +35,7 @@ class _AuthViewPage extends State<AuthView> {
     authNotifier.addListener(() {
       var state = authNotifier.getState();
       if (state is SuccessStateCustom && state.isSuccess) {
-        Navigator.pushReplacementNamed(context, HOME);
+        Navigator.pushReplacementNamed(context, Screen.MAIN);
         authNotifier.removeListener(() {});
       }
       if (state is ErrorStateCustom && state.msg.isNotEmpty == true) {

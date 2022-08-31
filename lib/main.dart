@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       routes: rootRouter,
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      initialRoute: HOME,
+      initialRoute: Screen.MAIN,
     );
   }
 }

@@ -93,9 +93,6 @@ class _HomeViewPage extends State<HomeView>
   @override
   void initState() {
     super.initState();
-    LocalStorageHelper().getToken().then((value) {
-      value.isEmpty ? {Navigator.restorablePushNamed(context, AUTH)} : null;
-    });
     var provider = Provider.of<HomeProvider>(context, listen: false);
     provider.connectToServer();
     provider.getListEmployee();
