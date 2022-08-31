@@ -50,10 +50,12 @@ class _MainScreenPage extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
+        body: SafeArea(
+            child: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        )),
         bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.black,
             showUnselectedLabels: false,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -66,7 +68,9 @@ class _MainScreenPage extends State<MainScreen> {
               ),
             ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.amber[800],
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.grey,
+            type: BottomNavigationBarType.fixed,
             onTap: _onItemTapped));
   }
 }
