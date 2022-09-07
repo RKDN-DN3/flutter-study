@@ -21,6 +21,7 @@ dependencies:
   hmssdk_flutter: ^0.7.5
   image_picker: ^0.8.5+3
   shared_preferences: ^2.0.14
+  firebase_messaging: ^13.0.0
 dev_dependencies:
   build_runner: ^2.0.0
   json_serializable: ^6.3.1

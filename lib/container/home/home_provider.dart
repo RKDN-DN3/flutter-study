@@ -107,8 +107,8 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> pickImage() async {
     try {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(image!.path,
             filename: image.path.split('/').last),
