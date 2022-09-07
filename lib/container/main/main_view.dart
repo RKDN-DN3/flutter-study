@@ -8,44 +8,23 @@ import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _MainScreenPage();
 }
 
 class _MainScreenPage extends State<MainScreen> {
-  int _selectedIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    LocalStorageHelper().getToken().then((value) {
-      value.isEmpty
-          ? {Navigator.restorablePushNamed(context, Screen.AUTH)}
-          : null;
-    });
-  }
-
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeView(),
     Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
+      'Index 1: Account',
       style: optionStyle,
     ),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -72,5 +51,21 @@ class _MainScreenPage extends State<MainScreen> {
             unselectedItemColor: Colors.grey,
             type: BottomNavigationBarType.fixed,
             onTap: _onItemTapped));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    LocalStorageHelper().getToken().then((value) {
+      value.isEmpty
+          ? Navigator.restorablePopAndPushNamed(context, Screen.AUTH)
+          : null;
+    });
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
