@@ -19,31 +19,39 @@ class NotificationPlugin {
     _requestPermission();
     _createChannel();
     _getToken();
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("message ${message.toMap().toString()}");
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      var initializationSettingsAndroid =
-          new AndroidInitializationSettings('@mipmap/ic_launcher');
-      if (notification != null && android != null) {
-        _flutterLocalNotificationsPlugin.show(
-          DateTime.now().millisecond,
-          message.notification?.title,
-          message.notification?.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              _channel.id,
-              _channel.name,
-              priority: Priority.max,
-              importance: Importance.max,
-              icon: "@mipmap/ic_launcher",
-              enableVibration: true,
-            ),
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onMessage.listen(_displayMessage);
+  }
+
+  Future<void> _firebaseMessagingBackgroundHandler(
+      RemoteMessage message) async {
+    await Firebase.initializeApp();
+    _displayMessage(message);
+  }
+
+  Future<void> _displayMessage(RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
+    if (notification != null && android != null) {
+      _flutterLocalNotificationsPlugin.show(
+        DateTime.now().millisecond,
+        message.notification?.title,
+        message.notification?.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            _channel.id,
+            _channel.name,
+            priority: Priority.max,
+            importance: Importance.max,
+            icon: "@mipmap/ic_launcher",
+            enableVibration: true,
           ),
-          payload: json.encode(message.data),
-        );
-      }
-    });
+        ),
+        payload: json.encode(message.data),
+      );
+    }
   }
 
   Future<void> _createChannel() async {
