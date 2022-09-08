@@ -32,8 +32,6 @@ class NotificationPlugin {
   Future<void> _displayMessage(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
     if (notification != null && android != null) {
       _flutterLocalNotificationsPlugin.show(
         DateTime.now().millisecond,
@@ -55,6 +53,7 @@ class NotificationPlugin {
   }
 
   Future<void> _createChannel() async {
+    const AndroidInitializationSettings('@mipmap/ic_launcher');
     await _flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()

@@ -2,12 +2,10 @@
 
 import 'package:example_flutter/container/home/home_provider.dart';
 import 'package:example_flutter/model/state/state_custom.dart';
-import 'package:example_flutter/utils/constant.dart';
-import 'package:example_flutter/utils/local_storage.dart';
-import 'package:example_flutter/utils/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
 import '../../generated/l10n.dart';
 import '../../model/data/chat.dart';
 
@@ -40,7 +38,6 @@ Future<void> _showMyDialog(BuildContext context, String message) async {
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _HomeViewPage();
 }
@@ -52,8 +49,6 @@ class _HomeViewPage extends State<HomeView>
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    S lang = S.of(context);
     homeProvider = Provider.of<HomeProvider>(context);
     return SafeArea(
         top: true,
@@ -83,7 +78,16 @@ class _HomeViewPage extends State<HomeView>
                         fontSize: 22),
                   ),
                 ),
-                renderMenu(context, homeProvider.currentMenu)
+                renderMenu(context, homeProvider.currentMenu),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      width: width,
+                      color: Colors.transparent,
+                      child: renderList(context, homeProvider.listDataChat,
+                          homeProvider.getCurrentIdSocket()),
+                    )),
+                renderInputAndSend(context)
               ],
             ),
           ),
@@ -114,6 +118,7 @@ class _HomeViewPage extends State<HomeView>
         SizedBox(width: width * 0.02),
         Expanded(
             child: TextField(
+          style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 0.5),
@@ -129,7 +134,7 @@ class _HomeViewPage extends State<HomeView>
             borderRadius: BorderRadius.circular(10.0),
           ),
           color: Colors.blue,
-          onPressed: homeProvider.pickImage,
+          onPressed: homeProvider.sendMessage,
           child: Text(lang.send,
               style: const TextStyle(fontSize: 16.0, color: Colors.white)),
         ),
@@ -190,7 +195,7 @@ class _HomeViewPage extends State<HomeView>
                                 bottom: BorderSide(
                                     width: 1, color: Color(0xFF1ED760)))
                             : null),
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: item != "search"
                         ? Text(
                             item,
