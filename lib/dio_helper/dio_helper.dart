@@ -19,7 +19,7 @@ class DioHelper {
         return response.data;
       }
     } on DioError catch (e) {
-      // throw Exception(e.message);
+      throw Exception(e.message);
     }
     return null;
   }
@@ -34,7 +34,7 @@ class DioHelper {
         return response.data;
       }
     } on DioError catch (e) {
-      // throw Exception(e.message);
+      throw Exception(e.message);
     }
     return null;
   }
@@ -49,7 +49,7 @@ class DioHelper {
         return response.data;
       }
     } on DioError catch (e) {
-      // throw Exception(e.message);
+      throw Exception(e.message);
     }
     return null;
   }
